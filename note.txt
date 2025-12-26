@@ -1,0 +1,177 @@
+
+composer require fratac/laravel-distributed-kv:dev-main
+php artisan vendor:publish --tag=config --provider="Fratac\LaravelDistributedKv\LaravelDistributedKvServiceProvider"
+php artisan migrate
+
+php artisan vendor:publish --tag=config --provider="Fratac\LaravelDistributedKv\LaravelDistributedKvServiceProvider"
+
+Add to your .env:
+
+env
+KV_CLIENT_NAME=app1
+KV_AUTH_TOKEN=super-secret-token
+
+
+Usage
+Set a key
+php
+use DistributedKv;
+
+DistributedKv::set('feature.checkout_v2', ['enabled' => true]);
+Get a key
+php
+$value = DistributedKv::get('feature.checkout_v2', ['enabled' => false]);
+Delete a key
+php
+DistributedKv::delete('feature.checkout_v2');
+Register a new client (auto‑propagated)
+php
+DistributedKv::registerNewClient('app3', 'https://app3.example.com');
+⏱️ Scheduling sync
+In app/Console/Kernel.php:
+
+php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('kv:sync')->everyMinute();
+}
+🔔 Events
+You can listen to events in your EventServiceProvider:
+
+php
+protected $listen = [
+    \Fratac\LaravelDistributedKv\Events\KeyCreated::class => [
+        App\Listeners\HandleKeyCreated::class,
+    ],
+    \Fratac\LaravelDistributedKv\Events\KeyUpdated::class => [
+        App\Listeners\HandleKeyUpdated::class,
+    ],
+    \Fratac\LaravelDistributedKv\Events\KeyDeleted::class => [
+        App\Listeners\HandleKeyDeleted::class,
+    ],
+    \Fratac\LaravelDistributedKv\Events\ClusterClientAdded::class => [
+        App\Listeners\NotifyAdminNewClient::class,
+    ],
+];
+Events include:
+
+KeyCreated($key, $value)
+
+KeyUpdated($key, $oldValue, $newValue)
+
+KeyDeleted($key, $oldValue)
+
+KeySynced($key, $localValue, $remoteValue, $sourceClient, $direction)
+
+ClusterClientAdded($name, $url)
+
+🖥️ Admin Panel
+Visit:
+
+Codice
+/kv-admin
+You’ll see:
+
+list of all keys
+
+version numbers
+
+timestamps
+
+deleted/active status
+
+known clients
+
+last sync timestamp
+
+🧩 API Endpoints
+All endpoints require header:
+
+Codice
+X-KV-TOKEN: {KV_AUTH_TOKEN}
+GET /api/kv/pull
+Returns keys updated since a timestamp.
+
+POST /api/kv/push
+Pushes local updates to a remote client.
+
+POST /api/kv/register-client
+Adds a new client to the cluster.
+
+🧱 Storage format
+Each key is stored as:
+
+Field	Description
+key	Unique identifier
+value	JSON or string
+version	Incremented on every change
+updated_at	Timestamp
+deleted_at	Null or timestamp
+🧭 Conflict Resolution
+Conflicts are resolved using:
+
+Version number (higher wins)
+
+Timestamp (newer wins)
+
+This ensures deterministic propagation across all clients.
+
+🛡️ Security
+All API calls require a shared token
+
+No external services
+
+No queue or Redis required
+
+Only Laravel HTTP client + Eloquent
+
+
+
+Nel ServiceProvider::boot():
+
+php
+$this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
+$this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-distributed-kv');
+
+
+use DistributedKv;
+
+// Crea/aggiorna
+DistributedKv::set('maintenance.mode', true);
+
+// Legge
+$mode = DistributedKv::get('maintenance.mode', false);
+
+// Cancella
+DistributedKv::delete('maintenance.mode');
+
+// Registra nuovo client e propaga
+DistributedKv::registerNewClient('app4', 'https://app4.example.com');
+
+In più, puoi intercettare gli eventi nel tuo app EventServiceProvider:
+
+php
+protected $listen = [
+\Fratac\LaravelDistributedKv\Events\KeyCreated::class => [
+App\Listeners\InvalidateConfigCache::class,
+],
+\Fratac\LaravelDistributedKv\Events\KeyUpdated::class => [
+App\Listeners\InvalidateConfigCache::class,
+],
+\Fratac\LaravelDistributedKv\Events\KeyDeleted::class => [
+App\Listeners\InvalidateConfigCache::class,
+],
+\Fratac\LaravelDistributedKv\Events\ClusterClientAdded::class => [
+App\Listeners\NotifyAdminNewClient::class,
+],
+];
+
+
+In App\Console\Kernel:
+
+php
+protected function schedule(Schedule $schedule)
+{
+$schedule->command('dkv:sync')->everyMinute();
+}
+
