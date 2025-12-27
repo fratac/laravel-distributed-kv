@@ -1,13 +1,13 @@
 <?php
 
-namespace Fratac\DistributedKv;
+namespace Fratac\LaravelDistributedKv;
 
 use Illuminate\Support\ServiceProvider;
 use Fratac\LaravelDistributedKv\Services\SyncManager;
 
 class LaravelDistributedKvServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/laravel-distributed-kv.php',
