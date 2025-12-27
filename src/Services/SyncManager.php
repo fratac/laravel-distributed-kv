@@ -12,6 +12,7 @@ use Fratac\LaravelDistributedKv\Events\KeyUpdated;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
+//class SyncManager
 class SyncManager
 {
     protected array $configClients;
