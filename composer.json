@@ -3,7 +3,7 @@
     "description": "Distributed key-value registry between Laravel applications using only PHP/Laravel.",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "autoload": {
         "psr-4": {
             "Fratac\\LaravelDistributedKv\\": "src/"
@@ -15,7 +15,7 @@
                 "Fratac\\LaravelDistributedKv\\LaravelDistributedKvServiceProvider"
             ],
             "aliases": {
-                "DistributedKv": "Fratac\\LaravelDistributedKv\\Facades\\LaravelDistributedKv"
+                "LaravelDistributedKv": "Fratac\\LaravelDistributedKv\\Facades\\LaravelDistributedKv"
             }
         }
     },
