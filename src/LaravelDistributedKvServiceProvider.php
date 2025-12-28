@@ -10,7 +10,7 @@ class LaravelDistributedKvServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/laravel-distributed-kv.php',
+            __DIR__ . '/config/laravel-distributed-kv.php',
             'laravel-distributed-kv'
         );
 
@@ -26,7 +26,7 @@ class LaravelDistributedKvServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/laravel-distributed-kv.php' => config_path('laravel-distributed-kv.php'),
+            __DIR__ . '/config/laravel-distributed-kv.php' => config_path('laravel-distributed-kv.php'),
         ], 'config');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -34,7 +34,7 @@ class LaravelDistributedKvServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Fratac\LaravelDistributedKv\Console\Commands\SyncCommand::class,
+                \Fratac\LaravelDistributedKv\Console\Commands\LaravelDistributeKvCommand::class,
             ]);
         }
     }

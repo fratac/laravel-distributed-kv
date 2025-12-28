@@ -5,7 +5,7 @@ namespace Fratac\LaravelDistributedKv\Console\Commands;
 use Illuminate\Console\Command;
 use Fratac\LaravelDistributedKv\Services\SyncManager;
 
-class SyncCommand extends Command
+class LaravelDistributeKvCommand extends Command
 {
     protected $signature = 'dkv:sync';
     protected $description = 'Sync distributed key-value data with other Laravel clients';
