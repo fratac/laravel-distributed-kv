@@ -1,4 +1,20 @@
-name: packagist.yml
+name: Packagist Auto-Update
+
 on:
+  push:
+    branches:
+      - main
+  release:
+    types: [ published ]
 
 jobs:
+  packagist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Packagist update
+        uses: devboard/github-action-packagist-update@v2
+        with:
+          username: ${{ secrets.PACKAGIST_USERNAME }}
+          api_token: ${{ secrets.PACKAGIST_TOKEN }}
+          package_name: fratac/laravel-distributed-kv

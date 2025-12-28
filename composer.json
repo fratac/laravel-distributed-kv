@@ -3,7 +3,6 @@
     "description": "Distributed key-value registry between Laravel applications using only PHP/Laravel.",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.4",
     "homepage": "https://github.com/fratac/laravel-distributed-kv",
     "autoload": {
         "psr-4": {

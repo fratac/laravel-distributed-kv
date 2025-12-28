@@ -1,3 +1,8 @@
+![Tests](https://github.com/fratac/laravel-distributed-kv/actions/workflows/ci.yml/badge.svg)
+![Release](https://github.com/fratac/laravel-distributed-kv/actions/workflows/semantic-release.yml/badge.svg)
+![Packagist](https://img.shields.io/packagist/v/fratac/laravel-distributed-kv)
+![License](https://img.shields.io/github/license/fratac/laravel-distributed-kv)
+
 # Laravel Distributed KV
 **Distributed key–value registry for Laravel applications — no Redis required.**  
 Sync configuration, feature flags, and shared state across multiple Laravel apps using only PHP, HTTP APIs, and scheduled commands.
