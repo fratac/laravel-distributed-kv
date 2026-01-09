@@ -35,3 +35,5 @@ Sync configuration, feature flags, and shared state across multiple Laravel apps
 
 ```bash
 composer require fratac/laravel-distributed-kv
+
+php artisan vendor:publish --tag=config --provider="Fratac\LaravelDistributedKv\LaravelDistributedKvServiceProvider"

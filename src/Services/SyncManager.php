@@ -10,6 +10,7 @@ use Fratac\LaravelDistributedKv\Events\KeyCreated;
 use Fratac\LaravelDistributedKv\Events\KeyUpdated;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 //class SyncManager
@@ -70,7 +71,14 @@ class SyncManager
 
         $response = Http::withHeaders([
             'X-DKV-TOKEN' => $this->token,
-        ])->get(rtrim($baseUrl, '/') . config('laravel-distributed-kv.base_path') . '/pull', $params);
+        ]);
+        if (config('app.env') === 'local') {
+            $response = $response->withOptions(
+            // Disable SSL certificate verification
+                ['verify' => false,]
+            );
+        }
+        $response = $response->get(rtrim($baseUrl, '/') . config('laravel-distributed-kv.base_path') . '/pull', $params);
 
         if (!$response->successful()) {
             return;
@@ -170,9 +178,16 @@ class SyncManager
             return;
         }
 
-        Http::withHeaders([
+        $response = Http::withHeaders([
             'X-DKV-TOKEN' => $this->token,
-        ])->post(rtrim($baseUrl, '/') . config('laravel-distributed-kv.base_path') . '/push', [
+        ]);
+        if (config('app.env') === 'local') {
+            $response = $response->withOptions(
+            // Disable SSL certificate verification
+                ['verify' => false,]
+            );
+        }
+        $response = $response->post(rtrim($baseUrl, '/') . config('laravel-distributed-kv.base_path') . '/push', [
             'data' => $items,
         ]);
     }
@@ -192,9 +207,16 @@ class SyncManager
                 continue;
             }
 
-            Http::withHeaders([
+            $response = Http::withHeaders([
                 'X-DKV-TOKEN' => $this->token,
-            ])->post(rtrim($clientUrl, '/') . config('laravel-distributed-kv.base_path') . '/register-client', [
+            ]);
+            if (config('app.env') === 'local') {
+                $response = $response->withOptions(
+                // Disable SSL certificate verification
+                    ['verify' => false,]
+                );
+            }
+            $response = $response->post(rtrim($clientUrl, '/') . config('laravel-distributed-kv.base_path') . '/register-client', [
                 'name' => $name,
                 'url' => $url,
             ]);
