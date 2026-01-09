@@ -1,6 +1,6 @@
 <?php
 
-namespace Fratac\LaravelDistributedKv;
+namespace App\LaravelDistributedKv;
 
 use Illuminate\Support\ServiceProvider;
 use Fratac\LaravelDistributedKv\Services\SyncManager;
