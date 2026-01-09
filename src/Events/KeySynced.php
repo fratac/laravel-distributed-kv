@@ -1,6 +1,6 @@
 <?php
 
-namespace App\LaravelDistributedKv\Events;
+namespace Fratac\LaravelDistributedKv\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

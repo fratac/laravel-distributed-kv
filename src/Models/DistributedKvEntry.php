@@ -1,10 +1,10 @@
 <?php
 
-namespace App\LaravelDistributedKv\Models;
+namespace Fratac\LaravelDistributedKv\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DistributedKv extends Model
+class DistributedKvEntry extends Model
 {
     protected $table = 'distributed_kv_entries';
     protected $primaryKey = 'key';

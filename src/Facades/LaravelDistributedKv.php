@@ -1,6 +1,6 @@
 <?php
 
-namespace App\LaravelDistributedKv\Facades;
+namespace Fratac\LaravelDistributedKv\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
