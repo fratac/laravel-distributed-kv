@@ -1,6 +1,6 @@
 <?php
 
-namespace Fratac\LaravelDistributedKv\Services;
+namespace App\LaravelDistributedKv\Services;
 
 use Carbon\Carbon;
 use Fratac\LaravelDistributedKv\Events\ClusterClientAdded;

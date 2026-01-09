@@ -1,6 +1,6 @@
 <?php
 
-namespace Fratac\LaravelDistributedKv\Http\Controllers;
+namespace App\LaravelDistributedKv\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Fratac\LaravelDistributedKv\Models\DistributedKvEntry;

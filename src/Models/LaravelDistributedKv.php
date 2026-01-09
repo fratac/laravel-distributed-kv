@@ -1,6 +1,6 @@
 <?php
 
-namespace Fratac\LaravelDistributedKv\Models;
+namespace App\LaravelDistributedKv\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

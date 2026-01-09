@@ -1,6 +1,6 @@
 <?php
 
-namespace Fratac\LaravelDistributedKv\Http\Controllers;
+namespace App\LaravelDistributedKv\Http\Controllers;
 
 use Fratac\LaravelDistributedKv\Events\ClusterClientAdded;
 use Illuminate\Http\Request;
